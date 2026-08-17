@@ -42,7 +42,8 @@ TFIDF_MATRIX_PATH = "tfidf_matrix_per_page.pkl"
 
 TOP_K = 5
 
-
+tfidf_context = ""
+embedding_context = ""
 # ============================================================
 # STREAMLIT UI
 # ============================================================
