@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 # load_dotenv() 
 
-# from dotenv import dotenv_values
+from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 
