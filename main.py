@@ -360,22 +360,25 @@ if query:
     # ========================================================
 
     with col2:
+        try:
 
-        st.subheader("Sentence Transformer RAG")
-
-        st.markdown("### Answer")
-
-        st.write(embedding_answer)
-
-        st.markdown("### Retrieved Chunks")
-
-        for i, result in enumerate(embedding_results, 1):
-
-            with st.expander(
-                f"Chunk {i} — Score: {result['score']:.4f}"
-            ):
-
-                st.write(result["text"])
+            st.subheader("Sentence Transformer RAG")
+    
+            st.markdown("### Answer")
+    
+            st.write(embedding_answer)
+    
+            st.markdown("### Retrieved Chunks")
+    
+            for i, result in enumerate(embedding_results, 1):
+    
+                with st.expander(
+                    f"Chunk {i} — Score: {result['score']:.4f}"
+                ):
+    
+                    st.write(result["text"])
+        except:
+            pass
 
     col1, col2 = st.columns(2)
 
