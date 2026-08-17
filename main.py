@@ -337,22 +337,25 @@ if query:
     # ========================================================
 
     with col1:
+        try:
 
-        st.subheader("TF-IDF RAG")
-
-        st.markdown("### Answer")
-
-        st.write(tfidf_answer)
-
-        st.markdown("### Retrieved Chunks")
-
-        for i, result in enumerate(tfidf_results, 1):
-
-            with st.expander(
-                f"Chunk {i} — Score: {result['score']:.4f}"
-            ):
-
-                st.write(result["text"])
+            st.subheader("TF-IDF RAG")
+    
+            st.markdown("### Answer")
+    
+            st.write(tfidf_answer)
+    
+            st.markdown("### Retrieved Chunks")
+    
+            for i, result in enumerate(tfidf_results, 1):
+    
+                with st.expander(
+                    f"Chunk {i} — Score: {result['score']:.4f}"
+                ):
+    
+                    st.write(result["text"])
+        except:
+            pass
 
 
     # ========================================================
