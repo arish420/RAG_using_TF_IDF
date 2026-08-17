@@ -383,8 +383,9 @@ if query:
         st.subheader("TF-IDF")
 
         st.markdown("### Context")
+        if tfidf_context:
 
-        st.write(tfidf_context)
+            st.write(tfidf_context)
 
         # st.markdown("### Retrieved Chunks")
 
@@ -392,8 +393,8 @@ if query:
         st.subheader("Sentence-Transformer")
 
         st.markdown("### Context")
-
-        st.write(embedding_context)
+        if embedding_context
+            st.write(embedding_context)
 
 
         
