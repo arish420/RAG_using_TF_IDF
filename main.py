@@ -147,6 +147,8 @@ def generate_answer(llm, query, context):
 
     prompt = ChatPromptTemplate.from_template("""
 You are a helpful RAG assistant.
+Answer greetings queries and tell about your role and services that your are providing.
+
 
 Answer the user's question using ONLY the provided context.
 
@@ -155,7 +157,6 @@ If the answer cannot be found in the context, say:
 
 Do not make up information.
 
-Answer to greeting queries and tell about your role and services that your are providing.
 
 Context:
 {context}
