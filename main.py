@@ -393,7 +393,7 @@ if query:
         st.subheader("Sentence-Transformer")
 
         st.markdown("### Context")
-        if embedding_context
+        if embedding_context:
             st.write(embedding_context)
 
 
