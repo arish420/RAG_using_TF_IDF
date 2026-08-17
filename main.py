@@ -306,19 +306,22 @@ if query:
     # ========================================================
 
     with st.spinner("Generating answers with Groq..."):
+        try:
 
-        tfidf_answer = generate_answer(
-            llm,
-            query,
-            tfidf_context
-        )
-        # st.write(tfidf_context)
-
-        embedding_answer = generate_answer(
-            llm,
-            query,
-            embedding_context
-        )
+            tfidf_answer = generate_answer(
+                llm,
+                query,
+                tfidf_context
+            )
+            # st.write(tfidf_context)
+    
+            embedding_answer = generate_answer(
+                llm,
+                query,
+                embedding_context
+            )
+        except:
+            pass
 
 
     # ========================================================
