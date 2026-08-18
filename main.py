@@ -148,26 +148,26 @@ def load_llm():
 def generate_answer(llm, query, context):
 
     prompt = ChatPromptTemplate.from_template("""
-You are a helpful RAG assistant.
-Answer greetings queries and tell about your role and services that your are providing.
+    You are a helpful RAG assistant.
+    Answer greetings queries and tell about your role and services that your are providing.
 
 
-Answer the user's question using ONLY the provided context.
-
-If the answer cannot be found in the context, say:
-"I don't know based on the provided context."
-
-Do not make up information.
-
-
-Context:
-{context}
-
-Question:
-{query}
-
-Answer:
-""")
+    Answer the user's question using ONLY the provided context.
+    
+    If the answer cannot be found in the context, say:
+    "I don't know based on the provided context."
+    
+    Do not make up information.
+    
+    
+    Context:
+    {context}
+    
+    Question:
+    {query}
+    
+    Answer:
+    """)
 
     chain = prompt | llm
 
@@ -256,53 +256,53 @@ if query:
 
     with st.spinner("Retrieving relevant chunks..."):
 
-        try:
+        # try:
 
-            # Load resources
-            vectorizer, tfidf_matrix = load_tfidf()
+        # Load resources
+        vectorizer, tfidf_matrix = load_tfidf()
 
-            embedding_model = load_embedding_model()
+        embedding_model = load_embedding_model()
 
-            ids, texts, embeddings = load_chunks_from_db()
+        ids, texts, embeddings = load_chunks_from_db()
 
-            llm = load_llm()
-
-
-            # ----------------------------------------------------
-            # TF-IDF
-            # ----------------------------------------------------
-
-            tfidf_results = retrieve_tfidf(
-                query,
-                vectorizer,
-                tfidf_matrix,
-                chunks
-            )
-
-            tfidf_context = "\n\n".join(
-                f"[Chunk {r['index']}]\n{r['text']}"
-                for r in tfidf_results
-            )
+        llm = load_llm()
 
 
-            # ----------------------------------------------------
-            # Sentence Transformer
-            # ----------------------------------------------------
+        # ----------------------------------------------------
+        # TF-IDF
+        # ----------------------------------------------------
 
-            embedding_results = retrieve_embeddings(
-                query,
-                embedding_model,
-                ids,
-                texts,
-                embeddings
-            )
+        tfidf_results = retrieve_tfidf(
+            query,
+            vectorizer,
+            tfidf_matrix,
+            chunks
+        )
 
-            embedding_context = "\n\n".join(
-                f"[Chunk {r['id']}]\n{r['text']}"
-                for r in embedding_results
-            )
-        except:
-            st.info("No Relevant Information Retrieved")
+        tfidf_context = "\n\n".join(
+            f"[Chunk {r['index']}]\n{r['text']}"
+            for r in tfidf_results
+        )
+
+
+        # ----------------------------------------------------
+        # Sentence Transformer
+        # ----------------------------------------------------
+
+        embedding_results = retrieve_embeddings(
+            query,
+            embedding_model,
+            ids,
+            texts,
+            embeddings
+        )
+
+        embedding_context = "\n\n".join(
+            f"[Chunk {r['id']}]\n{r['text']}"
+            for r in embedding_results
+        )
+        # except:
+        #     st.info("No Relevant Information Retrieved")
 
 
     # ========================================================
@@ -310,22 +310,22 @@ if query:
     # ========================================================
 
     with st.spinner("Generating answers with Groq..."):
-        try:
+        # try:
 
-            tfidf_answer = generate_answer(
-                llm,
-                query,
-                tfidf_context
-            )
-            # st.write(tfidf_context)
-    
-            embedding_answer = generate_answer(
-                llm,
-                query,
-                embedding_context
-            )
-        except:
-            pass
+        tfidf_answer = generate_answer(
+            llm,
+            query,
+            tfidf_context
+        )
+        # st.write(tfidf_context)
+
+        embedding_answer = generate_answer(
+            llm,
+            query,
+            embedding_context
+        )
+        # except:
+        #     pass
 
 
     # ========================================================
@@ -340,25 +340,25 @@ if query:
     # ========================================================
 
     with col1:
-        try:
+        # try:
 
-            st.subheader("TF-IDF RAG")
-    
-            st.markdown("### Answer")
-    
-            st.write(tfidf_answer)
-    
-            st.markdown("### Retrieved Chunks")
-    
-            for i, result in enumerate(tfidf_results, 1):
-    
-                with st.expander(
-                    f"Chunk {i} — Score: {result['score']:.4f}"
-                ):
-    
-                    st.write(result["text"])
-        except:
-            pass
+        st.subheader("TF-IDF RAG")
+
+        st.markdown("### Answer")
+
+        st.write(tfidf_answer)
+
+        st.markdown("### Retrieved Chunks")
+
+        for i, result in enumerate(tfidf_results, 1):
+
+            with st.expander(
+                f"Chunk {i} — Score: {result['score']:.4f}"
+            ):
+
+                st.write(result["text"])
+        # except:
+        #     pass
 
 
     # ========================================================
@@ -366,25 +366,25 @@ if query:
     # ========================================================
 
     with col2:
-        try:
+        # try:
 
-            st.subheader("Sentence Transformer RAG")
-    
-            st.markdown("### Answer")
-    
-            st.write(embedding_answer)
-    
-            st.markdown("### Retrieved Chunks")
-    
-            for i, result in enumerate(embedding_results, 1):
-    
-                with st.expander(
-                    f"Chunk {i} — Score: {result['score']:.4f}"
-                ):
-    
-                    st.write(result["text"])
-        except:
-            pass
+        st.subheader("Sentence Transformer RAG")
+
+        st.markdown("### Answer")
+
+        st.write(embedding_answer)
+
+        st.markdown("### Retrieved Chunks")
+
+        for i, result in enumerate(embedding_results, 1):
+
+            with st.expander(
+                f"Chunk {i} — Score: {result['score']:.4f}"
+            ):
+
+                st.write(result["text"])
+        # except:
+        #     pass
 
     col1, col2 = st.columns(2)
 
