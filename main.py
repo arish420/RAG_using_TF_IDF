@@ -60,7 +60,7 @@ query = st.text_input(
     "Enter your question:",
     placeholder="Ask something about your documents..."
 )
-query = str(TextBlob(query).correct())
+query = str(TextBlob(query).correct()).lower()
 
 # ============================================================
 # LOAD TF-IDF
