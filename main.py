@@ -37,7 +37,7 @@ chunks = [
 # CONFIG
 # ============================================================
 
-DB_PATH = "rag_without_rai_final.db"
+DB_PATH = "rag_without_rai_final_per_page.db"
 TFIDF_VECTORIZER_PATH = "tfidf_vectorizer_per_page.pkl"
 TFIDF_MATRIX_PATH = "tfidf_matrix_per_page.pkl"
 
