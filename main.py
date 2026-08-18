@@ -49,6 +49,28 @@ embedding_context = ""
 # STREAMLIT UI
 # ============================================================
 
+def fix_compound_hyphens(text, mode="space"):
+    """
+    mode="space": 'state-of-the-art' -> 'state of the art'
+    mode="join":  'state-of-the-art' -> 'stateoftheart'
+    mode="keep":  leaves it untouched
+    """
+    if mode == "space":
+        text = re.sub(r'(\w+)-(\w+)', r'\1 \2', text)
+    elif mode == "join":
+        text = re.sub(r'(\w+)-(\w+)', r'\1\2', text)
+    # mode == "keep" → do nothing
+    return text
+
+def fix_hyphenation(text, compound_mode="space"):
+    # text = fix_linebreak_hyphens(text)
+    text = fix_compound_hyphens(text, mode=compound_mode)
+    return text
+
+
+
+
+
 st.set_page_config(
     page_title="TF-IDF vs Sentence Transformer RAG",
     layout="wide"
@@ -61,6 +83,7 @@ query = st.text_input(
     placeholder="Ask something about your documents..."
 )
 query = str(TextBlob(query).correct()).lower()
+query = fix_hyphenation(query)
 
 st.write(query)
 
