@@ -11,6 +11,9 @@ import re
 import os
 from dotenv import load_dotenv
 
+from textblob import TextBlob
+
+
 # load_dotenv() 
 
 from dotenv import dotenv_values
@@ -29,41 +32,6 @@ chunks = [
     for item in re.split(r"^## Item \d+\s*$", content, flags=re.MULTILINE)
     if item.strip()
 ]
-
-from spellchecker import SpellChecker
-import spacy
-
-# Load once
-spell = SpellChecker()
-nlp = spacy.load("en_core_web_sm")
-
-def correct_spelling(text):
-    words = text.split()
-    corrected = []
-    for w in words:
-        # only correct if spellchecker thinks it's misspelled
-        if w.lower() in spell.unknown([w.lower()]):
-            fixed = spell.correction(w.lower())
-            corrected.append(fixed if fixed else w)
-        else:
-            corrected.append(w)
-    return " ".join(corrected)
-
-def lemmatize(text):
-    doc = nlp(text)
-    return " ".join([token.lemma_ for token in doc])
-
-def preprocess_query(query):
-    step1 = correct_spelling(query)
-    step2 = lemmatize(step1)
-    return step2
-
-# # Example
-# q = "I am runnning fastr to catch the bal"
-# print("Original :", q)
-# print("Corrected:", correct_spelling(q))
-# print("Final    :", preprocess_query(q))
-
 
 # ============================================================
 # CONFIG
@@ -92,8 +60,7 @@ query = st.text_input(
     "Enter your question:",
     placeholder="Ask something about your documents..."
 )
-
-query =preprocess_query(query)
+query = str(TextBlob(query).correct())
 
 # ============================================================
 # LOAD TF-IDF
