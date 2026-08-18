@@ -207,5 +207,5 @@ xxhash==3.8.1
 yarl==1.24.5
 zstandard==0.25.0
 python-dotenv
-pip install pyspellchecker spacy --break-system-packages
+pyspellchecker spacy --break-system-packages
 python -m spacy download en_core_web_sm
