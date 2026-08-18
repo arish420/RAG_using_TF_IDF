@@ -62,6 +62,8 @@ query = st.text_input(
 )
 query = str(TextBlob(query).correct()).lower()
 
+st.write(query)
+
 # ============================================================
 # LOAD TF-IDF
 # ============================================================
