@@ -207,6 +207,4 @@ xxhash==3.8.1
 yarl==1.24.5
 zstandard==0.25.0
 python-dotenv
-pyspellchecker 
-spacy==3.7.4
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+textblob 
