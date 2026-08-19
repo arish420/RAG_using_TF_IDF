@@ -33,6 +33,14 @@ chunks = [
     if item.strip()
 ]
 
+
+
+from spellchecker import SpellChecker
+spell = SpellChecker()
+
+
+
+
 # ============================================================
 # CONFIG
 # ============================================================
@@ -67,10 +75,6 @@ def fix_hyphenation(text, compound_mode="space"):
     text = fix_compound_hyphens(text, mode=compound_mode)
     return text
 
-
-
-
-
 st.set_page_config(
     page_title="TF-IDF vs Sentence Transformer RAG",
     layout="wide"
@@ -84,6 +88,25 @@ query = st.text_input(
 )
 # query = str(TextBlob(query).correct()).lower()
 query = fix_hyphenation(query)
+
+# Split text into words while keeping punctuation separate
+words = re.findall(r"\w+|[^\w\s]", query, re.UNICODE)
+
+corrected_words = []
+for word in words:
+    # Only check alphabetic words, ignore punctuation or numbers
+    if word.isalpha():
+        corrected = spell.correction(word)
+        # Use corrected word if found, otherwise keep original
+        corrected_words.append(corrected if corrected else word)
+    else:
+        corrected_words.append(word)
+
+# Reassemble the string nicely
+query = "".join(
+    [" " + w if w.isalpha() and i > 0 and corrected_words[i-1].isalpha() else w 
+     for i, w in enumerate(corrected_words)]
+).strip()
 
 st.write(query)
 
